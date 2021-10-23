@@ -2,7 +2,7 @@ import telebot
 from flask import Flask, request
 import os
 
-bot_token = '2071150573:AAEP5gP8fn-aH01VkOlGLMppHJ7tTCfPInA'
+bot_token = os.getenv("TOKEN")
 bot = telebot.TeleBot(token=bot_token, parse_mode=None)
 server = Flask(__name__)
 
@@ -48,7 +48,8 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://enigmatic-mountain-38645.herokuapp.com/' + bot_token)
+    bot.set_webhook(url='https://enigmatic-mountain-38645.herokuapp.com/' +
+                    bot_token)
     return "!", 200
 
 
