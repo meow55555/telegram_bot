@@ -1,8 +1,10 @@
 import telebot
 from flask import Flask, request
 import os
+import time
+import requests
+from config import bot_token, user_token
 
-bot_token = '2071150573:AAEP5gP8fn-aH01VkOlGLMppHJ7tTCfPInA'
 bot = telebot.TeleBot(token=bot_token, parse_mode=None)
 server = Flask(__name__)
 
@@ -14,14 +16,19 @@ def find_at(msg):
             return i
 
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['status'])
 def send_welcome(message):
-    bot.reply_to(message, 'Welcome!')
+    headers = {"auth": "y"}
+    r = requests.get('http://127.0.0.1:8080/api/status', headers=headers)
+    bot.reply_to(message, r.content)
 
 
-@bot.message_handler(commands=['help'])
+@bot.message_handler(commands=['status_verbose'])
 def send_help(message):
-    bot.reply_to(message, 'To use this bot, send it a username')
+    headers = {"auth": "y"}
+    r = requests.get('http://127.0.0.1:8080/api/status?mode=verbose',
+                     headers=headers)
+    bot.reply_to(message, r.content)
 
 
 @bot.message_handler(func=lambda msg: msg.text is not None and '@' in msg.text)
