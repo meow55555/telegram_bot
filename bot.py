@@ -1,7 +1,6 @@
 import telebot
 from flask import Flask, request
 import os
-import time
 import requests
 from config import bot_token, user_token
 
@@ -18,14 +17,14 @@ def find_at(msg):
 
 @bot.message_handler(commands=['status'])
 def send_welcome(message):
-    headers = {"auth": "y"}
+    headers = {"auth": user_token}
     r = requests.get('http://127.0.0.1:8080/api/status', headers=headers)
     bot.reply_to(message, r.content)
 
 
 @bot.message_handler(commands=['status_verbose'])
 def send_help(message):
-    headers = {"auth": "y"}
+    headers = {"auth": user_token}
     r = requests.get('http://127.0.0.1:8080/api/status?mode=verbose',
                      headers=headers)
     bot.reply_to(message, r.content)
