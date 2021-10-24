@@ -15,7 +15,7 @@ def find_at(msg):
             return i
 
 
-@bot.message_handler(commands=['api/status'])
+@bot.message_handler(commands=['status'])
 def send_welcome(message):
     bot.reply_to(message, 'Welcome!')
 
