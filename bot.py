@@ -1,8 +1,9 @@
 import telebot
 from flask import Flask, request
 import os
+import time
 
-bot_token = os.getenv("TOKEN")
+bot_token = os.getenv('TOKEN')
 bot = telebot.TeleBot(token=bot_token, parse_mode=None)
 server = Flask(__name__)
 
@@ -14,7 +15,7 @@ def find_at(msg):
             return i
 
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['api/status'])
 def send_welcome(message):
     bot.reply_to(message, 'Welcome!')
 
